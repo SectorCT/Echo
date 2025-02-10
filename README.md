@@ -43,14 +43,3 @@ Echo is an anonymous chat application that allows you to communicate with friend
 
 #### 2.3.3 Start the Expo server for Android:`npm run android` - If you have an Android emulator running, the application will open in it.
 
-## What is missing from the application?
-1. Message encryption during transmission.
-2. Features such as:
- - Changing a friend's nickname.
- - Removing a friend.
- - Blocking a friend.
- - Generating `friend_token` using JWT.
- - Making the QR scanner functional.
- - Using KeyStore for safer local storage of `username_token`.
- - "Link account" function to transfer an account to another device (not working yet, as it is not needed for now, but it's ready).
-3. Features like sending videos, emojis, etc. (postponed as encryption is a higher priority). The database is already set up.
