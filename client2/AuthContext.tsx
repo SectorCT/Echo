@@ -37,25 +37,25 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
 
 	async function login (token: string, password: string) {
 		try {
-			const response = await fetch(`${API_URL}/authentication/login/`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					token: token,
-					password: password,
-				}),
-			});
-			const data: ILoginResponse = await response.json();
+			// const response = await fetch(`${API_URL}/authentication/login/`, {
+			// 	method: "POST",
+			// 	headers: {
+			// 		"Content-Type": "application/json",
+			// 	},
+			// 	body: JSON.stringify({
+			// 		token: token,
+			// 		password: password,
+			// 	}),
+			// });
+			// const data: ILoginResponse = await response.json();
 
-			if (data.status === "success") {
-				AsyncStorage.setItem("accessToken", data.access_token);
-				AsyncStorage.setItem("refreshToken", data.refresh_token);
+			if (true) { //data.status === "success"
+				AsyncStorage.setItem("accessToken", "access"); //data.access_token
+				AsyncStorage.setItem("refreshToken", "refresh"); // data.refresh_token
 				AsyncStorage.setItem("userToken", token);
 				setLoggedIn(true);
 			} else {
-				console.log(data.message);
+				// console.log(data.message);
 				return;
 			}
 		} catch (error) {

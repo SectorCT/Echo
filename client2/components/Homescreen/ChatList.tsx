@@ -1,53 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { HomeStackParamList } from "@navigation/HomeStack";
 
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native";
 import { colors } from "../../styles";
 
 
-import { makeRequest } from "../../utils/requests";
-
-type ChatListingProps = {
-	navigation: StackNavigationProp<HomeStackParamList>;
-};
+// import { makeRequest } from "../../utils/requests";
 
 
-export default function ChatListing({ navigation }: ChatListingProps) {
+export default function ChatListing() {
 	const [Peopele, setPeopele] = useState([]);
 	function refresh() {
 		try {
-			makeRequest("authentication/list_friends/").then((response) => {
-				if (response === null) {
-					return;
-				}
-				if (response.status === 200) {
-					response.json().then((data) => {
-						console.log("Friends", data);
-						setPeopele(data.friends);
-					});
-				} else {
-					response.json().then((data) => {
-						console.log("Error while getting friends", response.status, data.message);
-					});
-				}
-			});
+			// makeRequest("authentication/list_friends/").then((response: any) => {
+			// 	if (response === null) {
+			// 		return;
+			// 	}
+			// 	if (response.status === 200) {
+			// 		response.json().then((data:any) => {
+			// 			console.log("Friends", data);
+			// 			setPeopele(data.friends);
+			// 		});
+			// 	} else {
+			// 		response.json().then((data:any) => {
+			// 			console.log("Error while getting friends", response.status, data.message);
+			// 		});
+			// 	}
+			// });
 		} catch (error) {
 			console.error(error);
 		}
 	}
 
 	useEffect(() => {
-		const unsubscribe = navigation.addListener("focus", () => {
-			refresh();
-		});
+		// const unsubscribe = navigation.addListener("focus", () => {
+		// 	refresh();
+		// });
 		return () => {
-			unsubscribe();
+			// unsubscribe();
 		};
 	}, []);
 
 	const handleOpenChat = (friendName: string, friendshipId: string) => {
-		navigation.navigate("Chat", { friendName, friendshipId });
+		// navigation.navigate("Chat", { friendName, friendshipId });
 	};
 
 

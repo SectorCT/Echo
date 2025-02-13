@@ -31,6 +31,14 @@ export default function RootLayout() {
                         navigationBarHidden: true
                       }}
                     />
+                    <Stack.Screen
+                      name="home/HomeScreen"
+                      options={{
+                        headerShown: false,
+                        statusBarTranslucent: true,
+                        navigationBarHidden: true
+                      }}
+                    />
                 </Stack>
             </GestureHandlerRootView>
         </AuthContextProvider>

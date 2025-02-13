@@ -49,6 +49,7 @@ export default function SignInScreen() {
 			return;
 		}
 		login(code, password);
+		router.navigate("/")
 	}
 	return (
 		<>

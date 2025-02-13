@@ -1,8 +1,16 @@
 import { Button, Text, View } from "react-native";
-import { useRouter } from "expo-router";
+import { Redirect, useRouter } from "expo-router";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "@/AuthContext";
 
 export default function Index() {
   const router = useRouter();
+  const { loggedIn, checkIfLoggedIn } = useContext(AuthContext);
+  
+  useEffect(() => {
+    checkIfLoggedIn()
+  }, [])
+
   return (
     <View
       style={{
@@ -11,9 +19,15 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Echo</Text>
-      <Button title="Login" onPress={() => {router.push("/auth/signin")}}/>
-      <Button title="Create Account"></Button>
+      {!loggedIn &&
+        <>
+          <Text>Echo: {loggedIn}</Text>
+          <Button title="Login" onPress={() => {router.push("/auth/signin")}}/>
+          <Button title="Create Account"></Button>
+        </>
+        || 
+        <Redirect href={"/home/HomeScreen"}/>
+      }
     </View>
   );
 }
