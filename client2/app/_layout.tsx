@@ -39,6 +39,30 @@ export default function RootLayout() {
                         navigationBarHidden: true
                       }}
                     />
+                    <Stack.Screen
+                      name="home/Friends"
+                      options={{
+                        headerShown: false,
+                        statusBarTranslucent: true,
+                        navigationBarHidden: true
+                      }}
+                    />
+                    <Stack.Screen
+                      name="home/InviteDevice"
+                      options={{
+                        headerShown: false,
+                        statusBarTranslucent: true,
+                        navigationBarHidden: true
+                      }}
+                    />
+                    <Stack.Screen
+                      name="home/AddPeople/[token]"
+                      options={{
+                        headerShown: false,
+                        statusBarTranslucent: true,
+                        navigationBarHidden: true,
+                      }}
+                    />
                 </Stack>
             </GestureHandlerRootView>
         </AuthContextProvider>
