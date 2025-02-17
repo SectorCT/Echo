@@ -20,8 +20,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
+DEBUG = True
 import os
 
 ALLOWED_HOSTS = ['*']
@@ -69,29 +68,27 @@ MIDDLEWARE = [
 
 ASGI_APPLICATION = 'shush.asgi.application'
 
-REDIS_URL = os.environ.get("REDIS_URL", "redis://:jz32A61KIhsyjLFjmHXHdxavOcSR4z5i@redis-11845.c44.us-east-1-2.ec2.cloud.redislabs.com:11845")
-
+REDIS_URL = "redis://127.0.0.1:6379"
 # Cache configuration
+
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://:jz32A61KIhsyjLFjmHXHdxavOcSR4z5i@redis-11845.c44.us-east-1-2.ec2.cloud.redislabs.com:11845",
+        "LOCATION": REDIS_URL,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
     },
 }
 
-# Channels configuration
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": ["redis://:jz32A61KIhsyjLFjmHXHdxavOcSR4z5i@redis-11845.c44.us-east-1-2.ec2.cloud.redislabs.com:11845"],
+            "hosts": [REDIS_URL],
         },
     },
 }
-
 
 ROOT_URLCONF = 'shush.urls'
 
@@ -117,10 +114,12 @@ TEMPLATES = [
 import dj_database_url
 #need improvements
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://ubvpqqfnorvosw:3364931606117413538519476276344f3f96289bc88ba0fd7ed0fe460298d8d6@ec2-34-236-56-112.compute-1.amazonaws.com:5432/davbe4td209gum'
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

@@ -5,3 +5,6 @@
 
 *.aab
 *.apk
+
+venv/
+__pycache__/
