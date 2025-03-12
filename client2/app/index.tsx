@@ -1,33 +1,20 @@
-import { Button, Text, View } from "react-native";
-import { Redirect, useRouter } from "expo-router";
-import { useEffect, useState, useContext } from "react";
-import { AuthContext } from "@/AuthContext";
+import React from 'react';
+import { useAuth } from '../src/contexts/AuthContext';
+import { router } from 'expo-router';
 
 export default function Index() {
-  const router = useRouter();
-  const { loggedIn, checkIfLoggedIn } = useContext(AuthContext);
-  
-  useEffect(() => {
-    checkIfLoggedIn()
-  }, [])
+  const { loggedIn, loading } = useAuth();
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {!loggedIn &&
-        <>
-          <Text>Echo: {loggedIn}</Text>
-          <Button title="Login" onPress={() => {router.push("/auth/signin")}}/>
-          <Button title="Create Account"></Button>
-        </>
-        || 
-        <Redirect href={"/home/HomeScreen"}/>
+  React.useEffect(() => {
+    if (!loading) {
+      if (loggedIn) {
+        router.replace('/home/HomeScreen');
+      } else {
+        router.replace('/auth/signin');
       }
-    </View>
-  );
+    }
+  }, [loggedIn, loading]);
+
+  // Show nothing while checking auth state and redirecting
+  return null;
 }

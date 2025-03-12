@@ -3,8 +3,8 @@ import React from "react";
 // import { HomeStackParamList } from "@navigation/HomeStack";
 
 import { StyleSheet, View } from "react-native";
-import TopBar from "../../components/Topbar";
-import ChatList from "../../components/Homescreen/ChatList";
+import TopBar from "../../src/components/Topbar";
+import ChatList from "../../src/components/Homescreen/ChatList";
 import { colors } from "../../styles";
 import { StatusBar } from "expo-status-bar";
 
@@ -13,7 +13,6 @@ export default function HomeScreen() {
 
 	return (
 		<View style={styles.container}>
-			<StatusBar style="light" />
 			<View style={styles.islandHider} />
 			<TopBar />
 			<ChatList />

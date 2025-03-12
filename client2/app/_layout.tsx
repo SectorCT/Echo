@@ -1,70 +1,27 @@
+import React from "react";
 import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { AuthContextProvider } from "@/AuthContext";
+import { AuthProvider } from "../src/contexts/AuthContext";
+import { useAuth } from '../src/contexts/AuthContext';
 
 export default function RootLayout() {
+    const { loggedIn, loading } = useAuth();
+
     return (
-        <AuthContextProvider>
-            <GestureHandlerRootView>
-                <Stack>
-                    <Stack.Screen
-                        name="index"
-                        options={{
-                            headerShown: false,
-                            statusBarTranslucent: true,
-                            navigationBarHidden: true,
-                        }}
-                    />
-                    <Stack.Screen
-                      name="auth/signin"
-                      options={{
-                        headerShown: false,
-                        statusBarTranslucent: true,
-                        navigationBarHidden: true
-                      }}
-                    />
-                    <Stack.Screen
-                      name="auth/signup"
-                      options={{
-                        headerShown: false,
-                        statusBarTranslucent: true,
-                        navigationBarHidden: true
-                      }}
-                    />
-                    <Stack.Screen
-                      name="home/HomeScreen"
-                      options={{
-                        headerShown: false,
-                        statusBarTranslucent: true,
-                        navigationBarHidden: true
-                      }}
-                    />
-                    <Stack.Screen
-                      name="home/Friends"
-                      options={{
-                        headerShown: false,
-                        statusBarTranslucent: true,
-                        navigationBarHidden: true
-                      }}
-                    />
-                    <Stack.Screen
-                      name="home/InviteDevice"
-                      options={{
-                        headerShown: false,
-                        statusBarTranslucent: true,
-                        navigationBarHidden: true
-                      }}
-                    />
-                    <Stack.Screen
-                      name="home/AddPeople/[token]"
-                      options={{
-                        headerShown: false,
-                        statusBarTranslucent: true,
-                        navigationBarHidden: true,
-                      }}
-                    />
+        <AuthProvider>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+                <Stack screenOptions={{ headerShown: false }}>
+                    <Stack.Screen name="index" />
+                    <Stack.Screen name="signup" />
+                    <Stack.Screen name="(tabs)" />
+                    <Stack.Screen name="QRScanner" />
+                    <Stack.Screen name="Friends/index" />
+                    <Stack.Screen name="home/HomeScreen" />
+                    <Stack.Screen name="home/InviteDevice" />
+                    <Stack.Screen name="home/InvitePeople" />
+                    <Stack.Screen name="home/AddPeople/[token]" />
                 </Stack>
             </GestureHandlerRootView>
-        </AuthContextProvider>
+        </AuthProvider>
     );
 }

@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { colors } from "../../styles";
 import QRCode from "react-native-qrcode-svg";
 
-import { AuthContext } from "../../AuthContext";
+import { AuthContext } from "../../src/contexts/AuthContext";
 import { useRouter } from "expo-router";
 
 

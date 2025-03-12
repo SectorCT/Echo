@@ -3,13 +3,13 @@ import { useRouter } from "expo-router";
 
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from "react-native";
 import { StatusBar } from "expo-status-bar";
-import ShushLogoAndText from "@/components/ShushLogoAndText";
-import AuthStyleButton from "@/components/AuthStyleButton";
+import ShushLogoAndText from "../../src/components/ShushLogoAndText"
+import AuthStyleButton from "../../src/components/AuthStyleButton";
 
 
-import { colors } from "@/styles";
+import { colors } from "../../styles";
 
-import { AuthContext } from "@/AuthContext";
+import { AuthContext } from "../../src/contexts/AuthContext";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 

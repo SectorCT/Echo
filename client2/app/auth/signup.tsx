@@ -3,12 +3,12 @@ import { useRouter } from "expo-router";
 
 import { StyleSheet, Text, View, StatusBar, TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import ShushLogoAndText from "../../components/ShushLogoAndText";
-import AuthStyleButton from "../../components/AuthStyleButton";
+import ShushLogoAndText from "../../src/components/ShushLogoAndText";
+import AuthStyleButton from "../../src/components/AuthStyleButton";
 
 import { colors } from "../../styles";
 
-import { AuthContext } from "../../AuthContext";
+import { AuthContext } from "../../src/contexts/AuthContext";
 
 
 

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity } from "react-native";
-import { colors } from "@/styles";
+import { colors } from "../../..//styles";
 
-import { makeRequest } from "@/utils/requests";
+import { makeRequest } from "../../../utils/requests";
 import { router, useLocalSearchParams } from "expo-router";
 
 
@@ -83,7 +83,7 @@ export default function AddPeople() {
                                 maxLength={20}
                             />
                             <TouchableOpacity onPress={() => { router.navigate("/QRScanner");}}>
-                                <Image source={require("@/assets/scanQr.png")} style={styles.input__field_button} />
+                                <Image source={require("../../../assets/scanQr.png")} style={styles.input__field_button} />
                             </TouchableOpacity>
                         </View>
                     </View>
