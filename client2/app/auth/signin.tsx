@@ -20,7 +20,14 @@ export default function SignInScreen() {
 
 	const [error, setError] = useState("");
 
-	const { login } = useContext(AuthContext);
+	const { login, loggedIn } = useContext(AuthContext);
+
+	useEffect(() => {
+		if (loggedIn) {
+			console.log("KUR KAPAN")
+			router.navigate("/home/HomeScreen")
+		}
+	}, [])
 
 	useEffect(() => {
 		AsyncStorage.getItem("userToken").then((value) => {

@@ -18,11 +18,14 @@ export default function InvitePeople() {
 					console.log("error getting friend invite code: response.status is null");
 					return;
 				}
+				console.log(response)
 				
 				if (response.status === 200) {
 					response.json().then((data) => {
 						setInviteCode(data.friendInviteCode);
+						console.log("[Friends] ", data.friendInviteCode)
 					});
+					
 				} else {
 					console.log("error getting friend invite code" + response.status);
 				}
@@ -30,7 +33,7 @@ export default function InvitePeople() {
 		} catch (error) {
 			console.log("error getting friend invite code:" + error);
 		}
-	});
+	}, []);
 
 	const [inviteCode, setInviteCode] = useState("");
 

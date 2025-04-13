@@ -24,53 +24,35 @@ const createTokens = (payload: JwtPayload) => {
 };
 
 export const signup = async (req: Request, res: Response) => {
-  console.log("[Signup] Starting signup process with request body:", {
-    ...req.body,
-    password: '[REDACTED]' // Don't log actual password
-  });
-
+  console.log("test")
   try {
     const { password } = req.body;
-    console.log("[Signup] Validating password length");
 
-    if (password && password.length < 8) {
-      console.log("[Signup] Password validation failed - too short");
+    if (password.length < 8) {
       return res.status(400).json({
         status: 'error',
         message: 'Password must be at least 8 characters.'
       });
     }
-
-    console.log("[Signup] Generating tokens");
-    const usernameToken = uuidv4();
-    const friendToken = uuidv4();
-    console.log("[Signup] Generated tokens:", { usernameToken, friendToken });
-
-    console.log("[Signup] Creating user in database");
+    
     const user = await User.create({
-      usernameToken,
-      friendToken,
+      usernameToken: uuidv4(),
+      friendToken: uuidv4(),
       password
     });
-    console.log("[Signup] User created successfully with ID:", user.id);
 
-    console.log("[Signup] Generating JWT tokens");
     const tokens = createTokens({
       userId: user.id,
       usernameToken: user.usernameToken
     });
-    console.log("[Signup] JWT tokens generated successfully");
 
-    console.log("[Signup] Sending success response");
     return res.status(200).json({
       status: 'success',
       message: 'Registration successful.',
       token: user.usernameToken,
       ...tokens
     });
-
   } catch (error) {
-    console.error("[Signup] Error during signup process:", error);
     return res.status(500).json({
       status: 'error',
       message: 'Could not create user.'

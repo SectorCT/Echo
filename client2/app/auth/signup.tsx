@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 
 import { StyleSheet, Text, View, StatusBar, TextInput } from "react-native";
@@ -19,7 +19,13 @@ export default function SignUpScreen() {
 
 	const [error, setError] = useState("");
 
-	const { signup } = React.useContext(AuthContext);
+	const { signup, loggedIn } = React.useContext(AuthContext);
+
+	useEffect(() => {
+		if (loggedIn) {
+			router.navigate("/home/HomeScreen")
+		}
+	}, [loggedIn])
 
 
 	function validatePassword() {

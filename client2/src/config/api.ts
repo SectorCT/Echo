@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 
 // Use your computer's local IP address here
-const LOCAL_IP = '192.168.127.213'; // Replace with your actual IP
+const LOCAL_IP = '10.52.54.213'; // Replace with your actual IP
 const DEV_API_URL = `http://${LOCAL_IP}:3000`;
 const PROD_API_URL = 'https://your-production-url.com';
 

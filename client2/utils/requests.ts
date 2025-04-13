@@ -43,10 +43,12 @@ async function refreshToken() {
 }
 
 export async function makeRequest(endpoint: string, method = "GET", body = {}) {
-	let accessToken = "" as string | null;
-	if (!accessToken) {
-		accessToken = await AsyncStorage.getItem("accessToken");
-	}
+	console.log(`[makeRequest] Starting request to ${endpoint} with method ${method}`);
+	
+	let accessToken = await AsyncStorage.getItem("accessToken");
+	console.log('[makeRequest] Access token status:', accessToken);
+
+	console.log('[makeRequest] Making initial request');
 	const response = await fetch(`${API_URL}/${endpoint}`, method == "GET" ? {
 		method,
 		headers: {
@@ -61,13 +63,22 @@ export async function makeRequest(endpoint: string, method = "GET", body = {}) {
 		},
 		body: JSON.stringify(body)
 	});
+
+	console.log('[makeRequest] Initial response status:', response.status);
+
 	if (response.status === 401) {
-		// return null;
+		console.log('[makeRequest] Received 401, attempting token refresh');
 		accessToken = await refreshToken();
+		
 		if (!accessToken) {
+			console.error('[makeRequest] Token refresh failed');
 			return null;
 		}
+		
+		console.log('[makeRequest] Token refreshed successfully, retrying request');
 		await AsyncStorage.setItem("accessToken", accessToken);
+		
+		console.log('[makeRequest] Making request with new token');
 		const refreshedResponse = await fetch(`${API_URL}/${endpoint}`, method == "GET" ? {
 			method,
 			headers: {
@@ -82,7 +93,11 @@ export async function makeRequest(endpoint: string, method = "GET", body = {}) {
 			},
 			body: JSON.stringify(body)
 		});
+		
+		console.log('[makeRequest] Refreshed response status:', refreshedResponse.status);
 		return refreshedResponse;
 	}
+
+	console.log('[makeRequest] Request completed successfully');
 	return response;
 }

@@ -35,7 +35,7 @@ export default function InviteDevice() {
 	// }, []);
 
 	function handleLogout() {
-		logout();
+		logout(router);
 	}
 
 	return (

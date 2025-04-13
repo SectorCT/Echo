@@ -1,12 +1,13 @@
 import { StyleSheet, View, TouchableOpacity, Text, Alert } from 'react-native';
 import { useAuth } from '../../src/contexts/AuthContext';
+import { router } from 'expo-router';
 
 export default function SettingsScreen() {
   const { logout } = useAuth();
 
   const handleLogout = async () => {
     try {
-      await logout();
+      await logout(router);
     } catch (error) {
       Alert.alert('Logout Failed', 'An error occurred while logging out');
     }
