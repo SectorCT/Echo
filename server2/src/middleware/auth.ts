@@ -4,8 +4,12 @@ import { jwtConfig } from '../config/jwt';
 import { JwtPayload } from '../types';
 import redisClient from '../config/redis';
 
+export interface AuthenticatedRequest extends Request {
+  user?: JwtPayload;
+}
+
 export const authenticateToken = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction
 ) => {
