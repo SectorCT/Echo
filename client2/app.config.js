@@ -15,18 +15,45 @@ module.exports = {
     assetBundlePatterns: ['**/*'],
     ios: {
       supportsTablet: true,
-      bundleIdentifier: 'com.yourcompany.echo'
+      bundleIdentifier: 'com.yourcompany.echo',
+      infoPlist: {
+        NSCameraUsageDescription: "This app uses the camera to scan QR codes",
+        NSPhotoLibraryUsageDescription: "This app uses the photo library to save QR codes"
+      }
     },
     android: {
       adaptiveIcon: {
         foregroundImage: './assets/images/adaptive-icon.png',
         backgroundColor: '#ffffff'
       },
-      package: 'com.yourcompany.echo'
+      package: 'com.yourcompany.echo',
+      permissions: [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
-    plugins: ['expo-router'],
+    plugins: [
+      'expo-router',
+      [
+        'expo-splash-screen',
+        {
+          image: './assets/images/splash-icon.png',
+          imageWidth: 200,
+          resizeMode: 'contain',
+          backgroundColor: '#ffffff'
+        }
+      ],
+      [
+        'expo-camera',
+        {
+          cameraPermission: "Allow $(PRODUCT_NAME) to access your camera to scan QR codes."
+        }
+      ]
+    ],
     experiments: {
-      typedRoutes: true
+      typedRoutes: true,
+      tsconfigPaths: true
     }
   }
 }; 

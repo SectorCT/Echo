@@ -24,8 +24,8 @@ RUN npm prune --production
 
 EXPOSE 3000
 
-# Add wait-for-it script to wait for database
-COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
-RUN chmod +x /usr/local/bin/wait-for-it.sh
+# Create startup script
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
-CMD ["wait-for-it.sh", "postgres:5432", "--", "npm", "start"] 
+CMD ["/app/start.sh"] 
