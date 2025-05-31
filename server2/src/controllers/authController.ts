@@ -24,27 +24,44 @@ const createTokens = (payload: JwtPayload) => {
 };
 
 export const signup = async (req: Request, res: Response) => {
-  console.log("test")
+  console.log('[AuthController] Signup request received:', {
+    body: req.body,
+    headers: req.headers,
+    method: req.method,
+    path: req.path
+  });
   try {
     const { password } = req.body;
 
+    if (!password) {
+      console.log('[AuthController] Password missing in request');
+      return res.status(400).json({
+        status: 'error',
+        message: 'Password is required.'
+      });
+    }
+
     if (password.length < 8) {
+      console.log('[AuthController] Password too short');
       return res.status(400).json({
         status: 'error',
         message: 'Password must be at least 8 characters.'
       });
     }
     
+    console.log('[AuthController] Creating new user');
     const user = await User.create({
       usernameToken: uuidv4(),
       friendToken: uuidv4(),
       password
     });
+    console.log('[AuthController] User created successfully:', { userId: user.id });
 
     const tokens = createTokens({
       userId: user.id,
       usernameToken: user.usernameToken
     });
+    console.log('[AuthController] Tokens generated successfully');
 
     return res.status(200).json({
       status: 'success',
@@ -53,6 +70,7 @@ export const signup = async (req: Request, res: Response) => {
       ...tokens
     });
   } catch (error) {
+    console.error('[AuthController] Signup error:', error);
     return res.status(500).json({
       status: 'error',
       message: 'Could not create user.'

@@ -7,35 +7,57 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000,
+  timeout: 5000,
   validateStatus: (status) => status >= 200 && status < 300,
 });
 
 if (__DEV__) {
   api.interceptors.request.use(request => {
-    console.log('API Request:', {
-      url: request.url,
+    console.log('API Request Details:', {
+      fullUrl: `${request.baseURL}${request.url}`,
       method: request.method,
       headers: request.headers,
+      data: request.data,
+      timeout: request.timeout,
     });
     return request;
   });
 
   api.interceptors.response.use(
     response => {
-      console.log('API Response:', {
+      console.log('API Response Details:', {
         url: response.config.url,
+        fullUrl: `${response.config.baseURL}${response.config.url}`,
         status: response.status,
         data: response.data,
+        headers: response.headers,
+        time: response.headers['x-response-time'],
       });
       return response;
     },
     error => {
-      console.error('API Error:', {
-        url: error.config?.url,
-        message: error.message,
-        response: error.response?.data,
-      });
+      if (error.code === 'ECONNABORTED') {
+        console.error('API Error: Request timed out after', error.config?.timeout, 'ms');
+        console.error('Request URL:', `${error.config?.baseURL}${error.config?.url}`);
+      } else if (error.code === 'ECONNREFUSED') {
+        console.error('API Error: Connection refused. Server might not be running at:', API_CONFIG.baseURL);
+      } else if (error.response) {
+        console.error('API Error Response:', {
+          status: error.response.status,
+          data: error.response.data,
+          headers: error.response.headers,
+        });
+      } else {
+        console.error('API Error:', {
+          message: error.message,
+          code: error.code,
+          config: {
+            url: error.config?.url,
+            method: error.config?.method,
+            baseURL: error.config?.baseURL,
+          },
+        });
+      }
       return Promise.reject(error);
     }
   );

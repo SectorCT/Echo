@@ -8,7 +8,7 @@ interface AuthContextType {
   loading: boolean;
   login: (token: string, password: string) => Promise<void>;
   logout: (router: Router) => Promise<void>;
-  signup: (password: string) => Promise<void>;
+  signup: (password: string) => Promise<boolean>;
   checkIfLoggedIn: () => Promise<void>;
 }
 
@@ -70,11 +70,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         throw new Error('Failed to store authentication tokens');
       }
 
-      console.log('[AuthContext] Setting logged in state to true', loggedIn);
+      console.log('[AuthContext] Setting logged in state to true');
       setLoggedIn(true);
       console.log('[AuthContext] Signup process completed successfully');
-    } catch (error) {
-      console.error('[AuthContext] Signup error:', error)
+      return true;
+    } catch (error: any) {
+      console.error('[AuthContext] Signup error:', error);
+      if (error.response) {
+        console.error('[AuthContext] Server response:', error.response.data);
+      }
+      throw error;
     }
   };
 

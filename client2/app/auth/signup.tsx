@@ -29,23 +29,50 @@ export default function SignUpScreen() {
 
 
 	function validatePassword() {
+		console.log('[Signup] Validating password:', {
+			passwordLength: password.length,
+			confirmPasswordLength: confirmPassword.length,
+			passwordsMatch: password === confirmPassword
+		});
+		
 		if (password.length < 8) {
+			console.log('[Signup] Password validation failed: Password too short');
 			setError("Password must be at least 8 characters long");
 			return false;
 		}
 		if (password !== confirmPassword) {
+			console.log('[Signup] Password validation failed: Passwords do not match');
 			setError("Passwords do not match");
 			return false;
 		}
+		console.log('[Signup] Password validation passed');
 		setError("");
 		return true;
 	}
 
-	function handleSubmit() {
+	async function handleSubmit() {
+		console.log('[Signup] Starting signup process');
 		if (!validatePassword()) {
+			console.log('[Signup] Password validation failed');
 			return;
 		}
-		signup(password, confirmPassword);
+		console.log('[Signup] Password validation passed, attempting signup');
+		try {
+			console.log('[Signup] Calling signup function with password');
+			const success = await signup(password);
+			console.log('[Signup] Signup response received:', success);
+			if (success) {
+				console.log('[Signup] Signup successful, navigating to home screen');
+				router.navigate("/home/HomeScreen");
+			}
+		} catch (error: any) {
+			console.error('[Signup] Error during signup:', error);
+			if (error.code === 'ECONNABORTED' || error.code === 'ECONNREFUSED') {
+				setError("Cannot connect to the server. Please check if the server is running.");
+			} else {
+				setError(error instanceof Error ? error.message : "An error occurred during signup");
+			}
+		}
 	}
 	return (
 		<>
