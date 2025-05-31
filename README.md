@@ -1,4 +1,4 @@
-# Echo
+# Echo - Abandoned/Archived
 - The application is an anonymous chat for the most secure communication possible.
 - All information is encrypted (E2EE).
 - Accounts and connections between them are established through a token system.
